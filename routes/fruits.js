@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  const { id } = req.params;
+  let { id } = req.params;
   id = Number(id);
   if (id <= fruits.length) {
     res.status(201).send(fruits[id - 1]);
