@@ -52,13 +52,13 @@ router.put("/:id", (req, res) => {
   const valid = () => res.status(201).send("Fruit has been created");
   if ((name, color)) {
     Fruit.name = name;
-    Fruit.age = age;
+    Fruit.color = color;
     valid();
   } else if (name) {
     Fruit.name = name;
     valid();
   } else if (age) {
-    Fruit.age = age;
+    Fruit.color = color;
     valid();
   } else {
     res.send("User was not updated");
@@ -68,7 +68,7 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   let { id } = req.params;
   id = Number(id);
-  if (id <= users.length) {
+  if (id <= fruits.length) {
     fruits.splice(id - 1, 1);
     res.send("Fruit has been deleted");
   } else {
