@@ -70,9 +70,9 @@ router.delete("/:id", (req, res) => {
   id = Number(id);
   if (id <= users.length) {
     fruits.splice(id - 1, 1);
-    res.send("User has been deleted");
+    res.send("Fruit has been deleted");
   } else {
-    res.status(404).send("User could not be found");
+    res.status(404).send("Fruit could not be found");
   }
 });
 
