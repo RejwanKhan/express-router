@@ -34,4 +34,46 @@ router.get("/:id", (req, res) => {
   }
 });
 
+router.post("/", (req, res) => {
+  const { name, age } = req.body;
+  if (name && age) {
+    users.push(req.body);
+  } else {
+    res.send("Could not create new user, does not have all the correct fields");
+  }
+});
+
+router.put("/:id", (req, res) => {
+  let { id } = req.params;
+  id = Number(id);
+  const Fruit = fruits[id - 1];
+  const { name, color } = req.body;
+
+  const valid = () => res.status(201).send("Fruit has been created");
+  if ((name, color)) {
+    Fruit.name = name;
+    Fruit.age = age;
+    valid();
+  } else if (name) {
+    Fruit.name = name;
+    valid();
+  } else if (age) {
+    Fruit.age = age;
+    valid();
+  } else {
+    res.send("User was not updated");
+  }
+});
+
+router.delete("/:id", (req, res) => {
+  let { id } = req.params;
+  id = Number(id);
+  if (id <= users.length) {
+    fruits.splice(id - 1, 1);
+    res.send("User has been deleted");
+  } else {
+    res.status(404).send("User could not be found");
+  }
+});
+
 module.exports = router;
