@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-
+const { check, validationResult } = require("express-validator");
 let users = [
   {
     name: "User 1",
@@ -30,16 +30,17 @@ router.get("/:id", (req, res) => {
   if (id <= users.length) {
     res.status(201).send(users[id - 1]);
   } else {
-    res.status(404).send({ error: "Route does not exist" });
+    return res.status(404).send({ error: "Route does not exist" });
   }
 });
 
-router.post("/", (req, res) => {
-  const { name, age } = req.body;
-  if (name && age) {
-    users.push(req.body);
+router.post("/", [check("name").trim().not().isEmpty()], (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).send({ errors: errors.array() });
   } else {
-    res.send("Could not create new user, does not have all the correct fields");
+    users.push(req.body);
+    res.status(201).send("User has been created");
   }
 });
 
