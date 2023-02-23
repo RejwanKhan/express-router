@@ -1,5 +1,7 @@
 const { Router } = require("express");
 const router = Router();
+const { check, validationResult } = require("express-validator");
+const { route } = require("./users");
 
 let fruits = [
   {
@@ -34,12 +36,14 @@ router.get("/:id", (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
-  const { name, age } = req.body;
-  if (name && age) {
-    users.push(req.body);
+//
+router.post("/", [check("color").trim().not().isEmpty()], (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(500).send({ errors: errors.array() });
   } else {
-    res.send("Could not create new user, does not have all the correct fields");
+    fruits.push(req.body);
+    res.status(201).send("Fruit has been created");
   }
 });
 
